@@ -2,7 +2,7 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-export default function Login() {
+export default function Register() {
   return (
     <div className="container jumbotron">
       <Form>
@@ -19,7 +19,7 @@ export default function Login() {
           <Form.Check type="checkbox" label="Remember me" />
         </Form.Group>
         <Button variant="primary" type="submit">
-          Login
+          Register
         </Button>
       </Form>
     </div>
