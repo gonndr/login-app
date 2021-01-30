@@ -1,25 +1,82 @@
-import React from "react";
+import React, { useState } from "react";
 import Login from "./Login";
 import NavbarComp from "./NavbarComp";
 import Register from "./Register";
 import Home from "./Home";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Private from "./Private";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+} from "react-router-dom";
+
+// Fake auth object
+const fakeAuth = {
+  isAuthenticated: false,
+  authenticate(cb) {
+    this.isAuthenticated = true;
+    setTimeout(cb, 100); // fake async
+  },
+  signout(cb) {
+    this.isAuthenticated = false;
+    setTimeout(cb, 100); // fake async
+  },
+};
 
 export default function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const onLogin = () => {
+    fakeAuth.authenticate(() => {
+      setLoggedIn(true);
+    });
+    console.log(fakeAuth.isAuthenticated);
+  };
+
+  const logout = () => {
+    fakeAuth.signout(() => {
+      setLoggedIn(false);
+    });
+    console.log(fakeAuth.isAuthenticated);
+  };
+
   return (
     <div className="container-fluid">
       <NavbarComp />
       <Switch>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/register">
-          <Register />
-        </Route>
-        <Route path="/">
-          <Home />
-        </Route>
+        <Route
+          path="/login"
+          render={(props) => <Login {...props} onLogin={onLogin} />}
+        />
+        <Route path="/register" component={Register} />
+        <Route path="/home" component={Home} />
+        <Route
+          path="/logout"
+          render={() => {
+            logout();
+          }}
+        />
+        <PrivateRoute component={Private} path="/private" exact />
       </Switch>
     </div>
   );
 }
+
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  return (
+    // Show the component only when the user is logged in
+    // Otherwise, redirect the user to /signin page
+    <Route
+      {...rest}
+      render={(props) =>
+        fakeAuth.isAuthenticated ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to="/login" />
+        )
+      }
+    />
+  );
+};

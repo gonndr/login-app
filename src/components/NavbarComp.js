@@ -6,18 +6,24 @@ export default function NavbarComp() {
   return (
     <React.Fragment>
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#home">Login App</Navbar.Brand>
+        <Navbar.Brand href="/">Login App</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link as={Link} to="/">
+            <Nav.Link as={Link} to="/home">
               Home
             </Nav.Link>
+            <Nav.Link as={Link} to="/private">
+              Private
+            </Nav.Link>
             <Nav.Link as={Link} to="/login">
-              Login
+              Log In
             </Nav.Link>
             <Nav.Link as={Link} to="/register">
               Register
+            </Nav.Link>
+            <Nav.Link as={Link} to="/logout">
+              Log Out
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
