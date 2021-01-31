@@ -45,7 +45,7 @@ export default function App() {
 
   return (
     <div className="container-fluid">
-      <NavbarComp />
+      <NavbarComp isLogged={loggedIn} />
       <Switch>
         <Route
           path="/login"

@@ -2,7 +2,7 @@ import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-export default function NavbarComp() {
+export default function NavbarComp({ isLogged }) {
   return (
     <React.Fragment>
       <Navbar bg="light" expand="lg">
@@ -16,15 +16,21 @@ export default function NavbarComp() {
             <Nav.Link as={Link} to="/private">
               Private
             </Nav.Link>
-            <Nav.Link as={Link} to="/login">
-              Log In
-            </Nav.Link>
-            <Nav.Link as={Link} to="/register">
-              Register
-            </Nav.Link>
-            <Nav.Link as={Link} to="/logout">
-              Log Out
-            </Nav.Link>
+            {!isLogged && (
+              <Nav.Link as={Link} to="/login">
+                Log In
+              </Nav.Link>
+            )}
+            {!isLogged && (
+              <Nav.Link as={Link} to="/register">
+                Register
+              </Nav.Link>
+            )}
+            {isLogged && (
+              <Nav.Link as={Link} to="/logout">
+                Log Out
+              </Nav.Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
