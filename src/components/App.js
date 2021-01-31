@@ -4,6 +4,7 @@ import NavbarComp from "./NavbarComp";
 import Register from "./Register";
 import Home from "./Home";
 import Private from "./Private";
+import Logout from "./Logout";
 import {
   BrowserRouter as Router,
   Switch,
@@ -35,7 +36,7 @@ export default function App() {
     console.log(fakeAuth.isAuthenticated);
   };
 
-  const logout = () => {
+  const onLogout = () => {
     fakeAuth.signout(() => {
       setLoggedIn(false);
     });
@@ -48,15 +49,15 @@ export default function App() {
       <Switch>
         <Route
           path="/login"
-          render={(props) => <Login {...props} onLogin={onLogin} />}
+          render={(props) => (
+            <Login {...props} onLogin={onLogin} isLogged={loggedIn} />
+          )}
         />
         <Route path="/register" component={Register} />
         <Route path="/home" component={Home} />
         <Route
           path="/logout"
-          render={() => {
-            logout();
-          }}
+          render={(props) => <Logout {...props} onLogout={onLogout} />}
         />
         <PrivateRoute component={Private} path="/private" exact />
       </Switch>
