@@ -12,6 +12,7 @@ import {
   Link,
   Redirect,
 } from "react-router-dom";
+import { AUTH_TOKEN } from "../constants";
 
 // Fake auth object
 const fakeAuth = {
@@ -28,6 +29,8 @@ const fakeAuth = {
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
+
+  const authToken = localStorage.getItem(AUTH_TOKEN);
 
   const onLogin = () => {
     fakeAuth.authenticate(() => {
