@@ -43,6 +43,7 @@ export default function App() {
     fakeAuth.signout(() => {
       setLoggedIn(false);
     });
+    localStorage.removeItem(AUTH_TOKEN);
     console.log(fakeAuth.isAuthenticated);
   };
 

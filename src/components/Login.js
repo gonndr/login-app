@@ -1,27 +1,30 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 export default function Login({ onLogin, isLogged }) {
-  const [emailVal, setEmailVal] = useState("");
-  const [passVal, setPassVal] = useState("");
-  const [loggedIn, setLoggedIn] = useState(isLogged);
+  const [formState, setFormState] = useState({
+    login: isLogged,
+    email: "",
+    password: "",
+  });
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    console.log(emailVal);
-    console.log(passVal);
 
     // fake authentication
     if (true) {
       onLogin();
-      setLoggedIn(true);
+      setFormState({
+        ...formState,
+        login: true,
+      });
     }
   };
 
   const renderLogin = () => {
-    if (isLogged) {
+    if (formState.login) {
       return <Redirect to="/home" />;
     } else {
       return (
@@ -32,8 +35,13 @@ export default function Login({ onLogin, isLogged }) {
               <Form.Control
                 type="email"
                 placeholder="Enter email"
-                onChange={(e) => setEmailVal(e.target.value)}
-                value={emailVal}
+                onChange={(e) =>
+                  setFormState({
+                    ...formState,
+                    email: e.target.value,
+                  })
+                }
+                value={formState.email}
               />
             </Form.Group>
 
@@ -42,8 +50,13 @@ export default function Login({ onLogin, isLogged }) {
               <Form.Control
                 type="password"
                 placeholder="Password"
-                onChange={(e) => setPassVal(e.target.value)}
-                value={passVal}
+                onChange={(e) =>
+                  setFormState({
+                    ...formState,
+                    password: e.target.value,
+                  })
+                }
+                value={formState.password}
               />
             </Form.Group>
             <Form.Group controlId="formBasicCheckbox">
